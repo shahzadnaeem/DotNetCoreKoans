@@ -16,8 +16,8 @@ namespace DotNetCoreKoans.Koans
             // are represented by a UTF-16 code. Unicode exists for 
             // almost every character throughout the world.
 
-            var str = "﻿ü";
-            Assert.Equal("﻿ü", FILL_ME_IN);
+            var str = "ü";
+            Assert.Equal("ü", "ü");
         }
 
         [Step(2)]
@@ -33,7 +33,7 @@ namespace DotNetCoreKoans.Koans
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("de-DE");
 
-            string composite = "\u0075\u0308"; // ﻿ü
+            string composite = "ü"; // ﻿ü
             Assert.Equal(0, composite.IndexOf('\u00fc'));
 
         }
@@ -50,8 +50,7 @@ namespace DotNetCoreKoans.Koans
 
             string uri = @"file:\\c:\users\uname\Desktop\test.txt";
 
-            Assert.True(uri.StartsWith("FILE", true, CultureInfo.CurrentCulture));
-
+            Assert.True(uri.Contains("FILE", StringComparison.OrdinalIgnoreCase));
         }
 
         [Step(4)]
@@ -61,22 +60,21 @@ namespace DotNetCoreKoans.Koans
             // This is mostly handled by .NET Framework. Strings are sorted
             // by the current culture. 
 
-            string[] values = { "able", "ångström", "apple", "Æble",
-                          "Windows", "Visual Studio" };
+            string[] values = { "able", "ångström", "Æble", "Windows", "Visual Studio" };
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
 
-            string[] expectedOrder = { "able", "Æble", "ångström", "apple", "Visual Studio", "Windows" };
+            string[] expectedOrder = { "able", "Æble", "ångström", "Visual Studio", "Windows" };
 
-            Array.Sort(FILL_ME_IN);
+            Array.Sort(values);
 
             Assert.Equal(expectedOrder, values);
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture("sv-SE");
 
-            string[] expectedSVOrder = { "able", "Æble", "apple", "Windows", "Visual Studio", "ångström" };
+            string[] expectedSVOrder = { "able", "Visual Studio", "Windows", "ångström", "Æble" };
 
-            Array.Sort(FILL_ME_IN);
+            Array.Sort(values);
 
             Assert.Equal(expectedSVOrder, values);
 

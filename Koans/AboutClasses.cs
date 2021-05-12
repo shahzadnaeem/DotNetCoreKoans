@@ -25,7 +25,7 @@ namespace DotNetCoreKoans.Koans
             // A type that is defined as a class is a reference type.
             // when you declare a variable of a reference type, the variable
             // contains the value null until you explicitly create an instance
-            object foo = null;
+            object foo = new Foo1();
             Assert.NotNull(foo);
         }
 
@@ -42,6 +42,10 @@ namespace DotNetCoreKoans.Koans
         {
             // Try to assign visible class members
             var foo = new Foo2();
+
+            foo.Int = 1;
+            foo._str = "Bar";
+
             Assert.Equal(1, foo.Int);
             Assert.Equal("Bar", foo._str);
         }
@@ -65,7 +69,11 @@ namespace DotNetCoreKoans.Koans
         {
             var foo = new Foo3();
             // make sure it won't explode
-            foo.Do();
+
+            if (!foo.Internal)
+            {
+                foo.Do();
+            }
         }
 
         class Foo4
@@ -77,14 +85,14 @@ namespace DotNetCoreKoans.Koans
         [Step(4)]
         public void UseConstructorsToDefineInitialValues()
         {
-            Foo4 foo = default(Foo4);
+            Foo4 foo = new Foo4("Bar");
             Assert.Equal("Bar", foo.Bar);
         }
 
         [Step(5)]
         public void DifferentObjectsHasDifferentInstanceVariables()
         {
-            Foo4 foo1 = new Foo4();
+            Foo4 foo1 = new Foo4("1");
             Foo4 foo2 = new Foo4();
             Assert.NotEqual(foo1.Bar, foo2.Bar);
         }
@@ -93,17 +101,16 @@ namespace DotNetCoreKoans.Koans
         {
             public int Val { get; }
             public Foo5(int val = 0) => Val = val;
-            public Foo5 Self() =>
-                throw new InvalidOperationException(nameof(Self));
+            public Foo5 Self() => this;
 
             public override string ToString()
             {
-                return base.ToString();
+                return $"Foo{Val}";
             }
 
             public override bool Equals(object obj)
             {
-                return base.Equals(obj);
+                return ((Foo5)obj).Val == Val;
             }
 
             public override int GetHashCode()
@@ -122,7 +129,7 @@ namespace DotNetCoreKoans.Koans
         [Step(7)]
         public void ToStringProvidesStringRepresentationOfAnObject()
         {
-            Foo5 foo = new Foo5();
+            Foo5 foo = new Foo5(5);
             Assert.Equal("Foo5", foo.ToString());
         }
 

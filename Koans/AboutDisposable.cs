@@ -35,7 +35,7 @@ namespace DotNetCoreKoans.Koans
             // get file contents in readable format
             var result = reader.ReadToEnd();
 
-            Assert.Equal(result, FILL_ME_IN);
+            Assert.Equal(result, "The quick brown fox jumped...");
         }
 
         [Step(2)]
@@ -66,7 +66,7 @@ namespace DotNetCoreKoans.Koans
                 reader.Dispose();
             }
 
-            Assert.Equal(result, FILL_ME_IN);
+            Assert.Equal(result, "The quick brown fox jumped...");
         }
     }
 }
